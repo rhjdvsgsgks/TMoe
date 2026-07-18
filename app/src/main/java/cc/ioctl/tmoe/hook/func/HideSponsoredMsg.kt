@@ -16,5 +16,8 @@ object HideSponsoredMsg : CommonDynamicHook() {
         ).loadAndFindMethods {
             name.contains("SponsoredMessages")
         }.hookBefore { if (isEnabled) it.result = null }
+        findMethod(loadClass("org.telegram.tgnet.TLRPC\$messages_SponsoredMessages")) {
+            name == "TLdeserialize"
+        }.hookBefore { if (isEnabled) it.result = null }
     }
 }
